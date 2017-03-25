@@ -3,9 +3,12 @@ module Logical
   # Represents a text file containing newline termined lines of ASCII text.
   class File
 
-    delegate :total_lines, :line_exists?, to: :@file_meta
+    delegate :total_lines, :line_exists?, :file_identifier, to: :@file_meta
 
     def initialize(file_path)
+      unless ::File.exist?(file_path)
+        raise "Provided file not found: #{file_path}"
+      end
       @file_path = file_path
       @file = ::File.open(file_path, "r")
       @file_meta = Logical::FileMetadata.generate(file_path)
@@ -18,6 +21,6 @@ module Logical
         @file.gets("\n")
       end
     end
-    
+
   end
 end

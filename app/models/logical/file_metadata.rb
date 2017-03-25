@@ -6,10 +6,6 @@ module Logical
 
     def self.generate(file_path)
 
-      unless ::File.exist?(file_path)
-        raise "Provided file not found: #{file_path}"
-      end
-
       line_lengths = []
       line_num = 0
 
@@ -30,12 +26,14 @@ module Logical
       new(json)
     end
 
-    attr_reader :file_path, :total_lines
+    attr_reader :file_path, :total_lines, :file_identifier
 
     def initialize(file_path, total_lines, line_lengths)
       @file_path = file_path
       @total_lines = total_lines
       @line_lengths = line_lengths
+      stat = ::File.stat(file_path)
+      @file_identifier = Digest::SHA1.hexdigest("#{stat.ino}#{stat.mtime.to_i}")
     end
 
     # Returns the length of the line identified by the provided number.
