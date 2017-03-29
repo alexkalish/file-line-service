@@ -1,1 +1,1 @@
-../tmp/example_file.txt
+/Users/alex/personal/text_file.txt

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'lines/:line_index' => 'lines#show'
+  get 'lines/:line_index' => 'hosted_file_lines#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

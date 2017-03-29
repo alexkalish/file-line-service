@@ -1,6 +1,9 @@
-class LinesController < ApplicationController
+# Resource for accessing lines in the hosted file.
+class HostedFileLinesController < ApplicationController
 
+  # GET /lines/<line index>
   def show
+    # Assuming that users start counting at 1, so subtract 1 from the provided index.
     line_index = params[:line_index].to_i - 1
     if current_file.line_exists?(line_index)
       line = Rails.cache.fetch("#{current_file.file_identifier}/#{line_index}") do
@@ -15,7 +18,7 @@ class LinesController < ApplicationController
   private
 
   def current_file
-    Rails.configuration.current_file
+    Logical::HostedFile.current_file
   end
 
 end
